@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { tracks } from "@/lib/tracks";
+import { trackGroups } from "@/lib/tracks";
 import TrackItem from "@/components/TrackItem";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { useState, useRef, useEffect } from "react";
 
 export default function GuiaPage() {
   const audioRefs = useRef<Record<string, HTMLAudioElement | null>>({});
@@ -13,7 +14,6 @@ export default function GuiaPage() {
   }
 
   function handlePlay(id: string) {
-    // Pausa cualquier otra pista que esté sonando
     Object.entries(audioRefs.current).forEach(([key, el]) => {
       if (key !== id && el) el.pause();
     });
@@ -22,30 +22,38 @@ export default function GuiaPage() {
 
   useEffect(() => {
     return () => {
-      // Por higiene: pausar todo al salir
       Object.values(audioRefs.current).forEach((el) => el?.pause());
     };
   }, []);
 
   return (
     <main className="mx-auto max-w-xl p-4 sm:p-6">
-      <header className="sticky top-0 z-10 -mx-4 sm:mx-0 backdrop-blur-lg bg-slate-950/60 border-b border-white/10 p-4 sm:rounded-2xl">
+      <header className="sticky top-0 z-10 -mx-4 sm:mx-0 backdrop-blur-lg bg-gray-200 border-b border-slate-300 p-4 sm:rounded-2xl">
         <h1 className="text-xl font-semibold">Audioguía</h1>
-        <p className="text-white/60 text-sm">Pulsa reproducir para escuchar cada pista.</p>
+        <p className="text-black/60 text-sm">Selecciona una categoría y reproduce un audio.</p>
       </header>
 
-      <section className="mt-4 space-y-3">
-        {tracks.map((t, idx) => (
-          <TrackItem
-            key={t.id}
-            track={t}
-            index={idx + 1}
-            registerRef={registerRef}
-            onPlay={handlePlay}
-            active={activeId === t.id}
-          />
+      <Accordion type="single" collapsible className="mt-4 space-y-2">
+        {trackGroups.map((group) => (
+          <AccordionItem key={group.id} value={group.id} className="border-white/10">
+            <AccordionTrigger className="text-lg font-medium">{group.title}</AccordionTrigger>
+            <AccordionContent>
+              <div className="space-y-3 mt-2">
+                {group.tracks.map((t, idx) => (
+                  <TrackItem
+                    key={t.id}
+                    track={t}
+                    index={idx + 1}
+                    registerRef={registerRef}
+                    onPlay={handlePlay}
+                    active={activeId === t.id}
+                  />
+                ))}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
         ))}
-      </section>
+      </Accordion>
     </main>
   );
 }

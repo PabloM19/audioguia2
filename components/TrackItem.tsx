@@ -1,8 +1,8 @@
 "use client";
 
-import { Play, Pause } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { Track } from "@/lib/tracks";
+import Link from "next/link";
 
 type Props = {
   track: Track;
@@ -71,23 +71,41 @@ export default function TrackItem({ track, index, registerRef, onPlay, active }:
     const m = Math.floor(s / 60);
     const sec = Math.floor(s % 60).toString().padStart(2, "0");
     return `${m}:${sec}`;
-    };
+  };
 
   return (
-    <div className="rounded-2xl bg-white/10 border border-white/10 shadow-lg backdrop-blur-md p-4 flex items-center gap-4">
-      <button
-        onClick={togglePlay}
-        aria-label={isPlaying ? "Pausar" : "Reproducir"}
-        className="h-12 w-12 shrink-0 rounded-full bg-white text-slate-900 flex items-center justify-center"
-      >
-        {isPlaying ? <Pause size={22} /> : <Play size={22} />}
-      </button>
-
-      <div className="flex-1 min-w-0">
-        <p className="truncate font-medium">
-          {index}. {track.title}
+    <div className="rounded-xl bg-white border border-gray-300 p-4 flex items-center gap-4 shadow-sm">
+      <div className="flex flex-col flex-1 min-w-0 text-gray-900">
+        <p className="truncate font-medium mb-2">
+          {index}. <Link href={`/guia/${track.id}`} className="underline">{track.title}</Link>
         </p>
-        <div className="mt-2 flex items-center gap-2">
+
+        <div className="flex justify-center gap-2 mb-2">
+          {[
+            { icon: "⏪", action: () => audioRef.current && (audioRef.current.currentTime -= 5) },
+            { icon: isPlaying ? "⏸️" : "▶️", action: togglePlay },
+            { icon: "⏹️", action: () => {
+                if (audioRef.current) {
+                  audioRef.current.pause();
+                  audioRef.current.currentTime = 0;
+                  setIsPlaying(false);
+                  setProgress(0);
+                }
+              }
+            },
+            { icon: "⏩", action: () => audioRef.current && (audioRef.current.currentTime += 5) },
+          ].map((btn, i) => (
+            <button
+              key={i}
+              onClick={btn.action}
+              className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-400 bg-gradient-to-b from-gray-50 to-gray-200"
+            >
+              {btn.icon}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-2">
           <input
             type="range"
             min={0}
@@ -95,9 +113,9 @@ export default function TrackItem({ track, index, registerRef, onPlay, active }:
             step={0.1}
             value={progress}
             onChange={handleSeek}
-            className="w-full accent-white"
+            className="w-full accent-black"
           />
-          <span className="text-xs text-white/70 w-16 text-right">
+          <span className="text-xs text-gray-600 w-16 text-right">
             {fmt(progress)} / {fmt(duration)}
           </span>
         </div>
