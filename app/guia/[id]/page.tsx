@@ -1,9 +1,15 @@
+// app/guia/[id]/page.tsx
 import { trackGroups } from "@/lib/tracks";
 import Image from "next/image";
 
-export default function TrackDetail({ params }: { params: { id: string } }) {
-  const track = trackGroups.flatMap(g => g.tracks).find(t => t.id === params.id);
+export default async function TrackDetail({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
 
+  const track = trackGroups.flatMap((g) => g.tracks).find((t) => t.id === id);
   if (!track) return <div className="p-6">Pista no encontrada</div>;
 
   return (
@@ -15,6 +21,7 @@ export default function TrackDetail({ params }: { params: { id: string } }) {
         width={800}
         height={600}
         className="rounded-lg border border-gray-300"
+        priority
       />
       <p className="text-gray-700">{track.description}</p>
     </main>

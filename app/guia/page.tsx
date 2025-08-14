@@ -21,8 +21,10 @@ export default function GuiaPage() {
   }
 
   useEffect(() => {
+    // Tomamos un snapshot de la ref para evitar el warning
+    const refsSnapshot = audioRefs.current;
     return () => {
-      Object.values(audioRefs.current).forEach((el) => el?.pause());
+      Object.values(refsSnapshot).forEach((el) => el?.pause());
     };
   }, []);
 
