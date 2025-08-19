@@ -2,6 +2,7 @@
 
 import { trackGroups } from "@/lib/tracks";
 import Image from "next/image";
+import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
 
 export default function TrackDetailClient({ id }: { id: string }) {
@@ -68,6 +69,14 @@ export default function TrackDetailClient({ id }: { id: string }) {
 
   return (
     <main className="max-w-xl mx-auto p-4 space-y-4 text-gray-900">
+      {/* Botón de volver */}
+      <Link
+        href="/guia"
+        className="inline-flex items-center px-3 py-2 text-sm font-medium rounded-lg border border-gray-300 bg-gradient-to-b from-gray-50 to-gray-100 shadow-sm"
+      >
+        ← Volver
+      </Link>
+
       <h1 className="text-xl font-semibold">{track.title}</h1>
 
       <Image
@@ -77,8 +86,7 @@ export default function TrackDetailClient({ id }: { id: string }) {
         height={600}
         className="w-full aspect-[4/3] object-cover object-center rounded-lg border border-gray-300"
         priority
-        />
-
+      />
 
       <p className="text-gray-700">{track.description}</p>
 

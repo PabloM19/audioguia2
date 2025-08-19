@@ -15,7 +15,7 @@ export type TrackGroup = {
 export const trackGroups: TrackGroup[] = [
   {
     id: "intro",
-    title: "Introducción · 08:30am",
+    title: "Introducción",
     tracks: [
       {
         id: "audio1",
@@ -35,7 +35,7 @@ export const trackGroups: TrackGroup[] = [
   },
   {
     id: "catedral",
-    title: "Catedral de Valencia · 09:10am",
+    title: "Catedral de Valencia",
     tracks: [
       {
         id: "audio3",
@@ -125,7 +125,7 @@ export const trackGroups: TrackGroup[] = [
   },
   {
     id: "reina",
-    title: "Plaza de la Reina · 10:30am",
+    title: "Plaza de la Reina",
     tracks: [
       {
         id: "audio15",
@@ -145,7 +145,7 @@ export const trackGroups: TrackGroup[] = [
   },
   {
     id: "serranos",
-    title: "Torres de Serranos · 11:00am",
+    title: "Torres de Serranos",
     tracks: [
       {
         id: "audio17",
@@ -179,7 +179,7 @@ export const trackGroups: TrackGroup[] = [
   },
   {
     id: "pio5",
-    title: "Museo de Bellas Artes · 11:30am",
+    title: "Museo de Bellas Artes",
     tracks: [
       {
         id: "audio21",
@@ -234,7 +234,7 @@ export const trackGroups: TrackGroup[] = [
   },
   {
     id: "comida",
-    title: "Rumbo a la comida · 13:30pm",
+    title: "Rumbo a la comida",
     tracks: [
       {
         id: "audio28",
@@ -268,7 +268,7 @@ export const trackGroups: TrackGroup[] = [
   },
   {
     id: "monforte",
-    title: "Jardines de Monforte · 15:45pm",
+    title: "Jardines de Monforte",
     tracks: [
       {
         id: "audio32",
