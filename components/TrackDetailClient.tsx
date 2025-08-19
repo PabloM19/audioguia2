@@ -75,9 +75,10 @@ export default function TrackDetailClient({ id }: { id: string }) {
         alt={track.title}
         width={800}
         height={600}
-        className="rounded-lg border border-gray-300"
+        className="w-full aspect-[4/3] object-cover object-center rounded-lg border border-gray-300"
         priority
-      />
+        />
+
 
       <p className="text-gray-700">{track.description}</p>
 
